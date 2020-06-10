@@ -23,14 +23,14 @@ class WhatsappBot:
         # <div class="M6HbS"><span class="b74 emojik wa" tabindex="-1" data-emoji-index="0" style="background-position: -128px -96px;"></span><span class="b97 emojik wa" tabindex="-1" data-emoji-index="1" style="background-position: -64px 0px;"></span><span class="b62 emojik wa" tabindex="-1" data-emoji-index="2" style="background-position: -96px -128px;"></span><span class="b3 emojik wa" tabindex="-1" data-emoji-index="3" style="background-position: -32px -128px;"></span></div>
 
         self.driver.get('https://web.whatsapp.com')
-        time.sleep(30)
+        time.sleep(3)
         for  contato in self.contatos:
             contato = self.driver.find_element_by_xpath(f"//span[@title='{contato}']")
             time.sleep(3)
             contato.click()
             while self.repeat > 0:
                 self.repeat-=1
-                chat_box = self.driver.find_element_by_class_name('_1Plpp')
+                chat_box = self.driver.find_element_by_class_name('_3uMse')
                 time.sleep(3)
                 chat_box.click()
                 chat_box.send_keys(self.mensagem)
@@ -41,11 +41,11 @@ class WhatsappBot:
                 botao_emoji = self.driver.find_element_by_xpath("//span[@data-icon='smiley']")
                 time.sleep(2)
                 botao_emoji.click()
-                emoji_box = self.driver.find_element_by_class_name('_2vjPO')
+                emoji_box = self.driver.find_element_by_class_name('_1qTcI')
                 time.sleep(3)
                 emoji_box.click()
                 emoji_box.send_keys(self.findEmoji)
-                emoji_class = self.driver.find_element_by_class_name('M6HbS')
+                emoji_class = self.driver.find_element_by_class_name('_1kf8y')
                 emoji_class.click()
                 emoji = self.driver.find_element_by_xpath("//span[@data-emoji-index='3']")
                 time.sleep(2)

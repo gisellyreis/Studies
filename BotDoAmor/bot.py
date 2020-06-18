@@ -4,17 +4,18 @@ import random
 
 class WhatsappBot:
     def __init__(self):
-        self.mensagem = ['Hey!!!! Melhor presente de tooodooooos ...', 'É um SPAMM \o/\o/', 'I Love you', ' = ', 'Melhor Gamer ever', 'Beba água', 'Feliz Aniversário Gafs']
-        self.findEmoji = ["hearts", "birthday", "moon", "food"]
+        self.mensagem = ['Hey!!!! Melhor presente de tooodooooos ...', 'É um SPAMM \o/\o/', 'I Love you', ' = ', 'Melhor Gamer ever', 'Beba água', 'Coma chocolate', 'Feliz Aniversário Gafs']
+        self.findEmoji = ["birthday", "hearts", "moon", "birthday", "hearts", "moon", "birthday", "hearts"]
         self.contatos = ["Base"]
-        self.repeat = 3
-        self.repeatEmoji = 6
+        # Quantidade de vezes que o bot vai rodar
+        self.repeat = 4
+        self.repeatEmoji = random.randint(1,8)
         options = webdriver.ChromeOptions()
         options.add_argument('lang=pt-br')
         self.driver = webdriver.Chrome(executable_path=r'./chromedriver.exe')
 
     def SelecionaEmoji(self):
-        e = random.randint(1,2)
+        e = random.randint(1,3)
         for i in range(e):
             botao_emoji = self.driver.find_element_by_xpath("//span[@data-icon='smiley']")
             time.sleep(2)
@@ -29,8 +30,6 @@ class WhatsappBot:
                 var = 3
             elif word == 'moon':
                 var = 1
-            elif word == 'food':
-                var = 12
             else:
                 var = 5
             emoji_box.send_keys(f"{word}")
@@ -48,7 +47,7 @@ class WhatsappBot:
             botao_sair = self.driver.find_element_by_xpath("//span[@data-icon='x']")
             botao_sair.click()
             time.sleep(2)
-            self.repeatEmoji = 3
+            self.repeatEmoji = random.randint(1,8)
         self.Enviar()
 
     def Enviar(self):

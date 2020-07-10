@@ -1,1 +1,1 @@
-# Projects
+# Studies

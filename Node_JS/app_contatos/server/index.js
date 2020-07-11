@@ -35,7 +35,7 @@ router.get('/contatos/:id?', (req, res) => {
 router.delete('/contatos/:id', (req, res) => {
     execSQLQuery('DELETE FROM Contatos WHERE id =' + parseInt(req.params.id), connection, res);
     connection.end();
-})
+}) 
 
 router.post('/contatos', (req, res) => {
     const { nome, telefone, email } = req.body;

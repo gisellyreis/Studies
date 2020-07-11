@@ -1,0 +1,2 @@
+Manipulando arquivo de texto em python.
+Testando contagem de palavras separadas por: espaços, pontos.

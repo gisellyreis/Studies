@@ -6,7 +6,7 @@ class WhatsappBot:
     def __init__(self):
         self.mensagem = ['Hey!!!! Melhor presente de tooodooooos ...', 'É um SPAMM \o/\o/', 'I Love you', ' = ', 'Melhor Gamer ever', 'Beba água', 'Coma chocolate', 'Feliz Aniversário Gafs']
         self.findEmoji = ["birthday", "hearts", "moon", "birthday", "hearts", "moon", "birthday", "hearts"]
-        self.contatos = ["Base"]
+        self.contatos = ["Gafanhoto"]
         # Quantidade de vezes que o bot vai rodar
         self.repeat = 30
         self.pausa = 2

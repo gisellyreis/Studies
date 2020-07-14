@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const mysql = require('mysql');
+const cors = require('cors');
 
 const connection = mysql.createConnection({
     host: 'localhost',
@@ -10,6 +11,7 @@ const connection = mysql.createConnection({
     database: 'agenda'
 });
 
+app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
@@ -28,13 +30,12 @@ router.get('/contatos', (req, res) => {
 router.get('/contatos/:id?', (req, res) => {
     let filter = '';
     if(req.params.id) filter = ' WHERE id =' + parseInt(req.params.id);
-    execSQLQuery('SELECT * FROM Contatos', + filter, connection, res);
+    execSQLQuery('SELECT * FROM Contatos' + filter, connection, res);
     // usar para fazer buscas
 })
 
 router.delete('/contatos/:id', (req, res) => {
     execSQLQuery('DELETE FROM Contatos WHERE id =' + parseInt(req.params.id), connection, res);
-    connection.end();
 }) 
 
 router.post('/contatos', (req, res) => {

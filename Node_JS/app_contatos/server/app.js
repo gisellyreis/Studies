@@ -4,7 +4,6 @@ const container = document.getElementById('container');
 let data = {};
 
 list();
-strong = document.createElement('strong');
 
 function list() {
     fetch(
@@ -14,13 +13,9 @@ function list() {
         .then((res) => {
             console.log(res);
             data = res;
-            
-            strong = document.createElement('strong')
-            
+                        
             if(data.rows <= 0) {
-                text = document.createTextNode('Ainda não há pessoas cadastradas!')
-                strong.appendChild(text)
-                container.appendChild(strong)
+                info('Ainda não há pessoas cadastradas!');
             }
             else {
                 data.results.forEach(contato => {
@@ -58,45 +53,33 @@ function list() {
                     tr.appendChild(tdEd)
 
                     tr.setAttribute('id', contato.id)
-                    contatos.appendChild(tr)
-                    console.log(contato)
-
-                
+                    contatos.appendChild(tr)                
                 });
             }
     })
 
 }
 
-var initDel = {
-    method: 'DELETE',
-    mode: 'cors',
-    cache: 'default'
-};
-
-
 function handleEdit(id) {
-   /*  const contato = document.getElementById(id);
-    //debugger
-    */
     const nome = document.getElementById('nome').value;
     const email = document.getElementById('email').value;
     const telefone = document.getElementById('telefone').value;
    
-    fetch(
-        `http://localhost:3333/contatos/${id}`, {
+    postData(`http://localhost:3333/contatos/${id}`,  { nome: nome, email: email, telefone: telefone })
+    .then((res) => {
+        console.log(res);
+    })
+    /* 
+        fetch(
+            `http://localhost:3333/contatos/${id}`, {
             method: "PUT",
             headers: {
                 'Content-Type':'application/x-www-form-urlencoded'
               },
             body: `nome=${nome}&email=${email}&telefone=${telefone}`
-        })
-        .then((res) => res.json())
-        .then((res) => {
-            console.log(res);
-            data = res;
-          
-    })
+        }) 
+    */
+        
 }
 
 function edit(id) {
@@ -108,7 +91,6 @@ function edit(id) {
         .then((res) => {
             console.log(res);
             const {nome, telefone, email} = res[0];
-            console.log(nome);
             contato.innerHTML = '';
 
             form = document.createElement('form');
@@ -141,13 +123,72 @@ function edit(id) {
 function handleDelete(id) {
     const contato = document.getElementById(id);
     contato.innerHTML = '';
-    fetch(
-        `http://localhost:3333/contatos/${id}`, initDel
-        )
-        .then((res) => res.json())
-        .then((res) => {
-            console.log(res);
-            data = res;
-          
-    })
+    danger('Contato Excluido!');
+
+    async function del(url = '') {
+        const response = await fetch(url, {
+          method: 'DELETE', 
+          mode: 'cors',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        });
+        return response.json();
+    }
+
+    del(`http://localhost:3333/contatos/${id}`)
+    .then(data => {
+        console.log(data); 
+    });
+    
+}
+
+async function postData(url = '', data = {}) {
+    const response = await fetch(url, {
+      method: 'PUT', 
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    });
+    return response.json();
+}
+
+function danger(msg) {
+    div = document.createElement('div');
+    text = document.createTextNode(msg);
+    div.setAttribute('class', 'alert alert-danger');
+    div.setAttribute('role', 'alert');
+    div.appendChild(text);
+
+    btn = document.createElement('button');
+    btn.setAttribute('type', 'button');
+    btn.setAttribute('class', 'close');
+    btn.setAttribute('data-dismiss', 'alert');
+    btn.setAttribute('aria-label', 'Close');
+
+    span = document.createElement('span');
+    span.setAttribute('aria-hidden', 'true');
+    text = document.createTextNode('x');
+    span.appendChild(text);
+
+    btn.appendChild(span);
+    div.appendChild(btn);
+
+    container.appendChild(div);
+}
+
+function info(msg) {
+    div = document.createElement('div');
+    div.setAttribute('class', 'alert alert-info');
+    div.setAttribute('role', 'alert');
+    
+    strong = document.createElement('strong');
+    text = document.createTextNode(msg);
+    strong.appendChild(text);
+    div.appendChild(strong);
+
+    container.appendChild(div);
 }

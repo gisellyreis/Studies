@@ -64,7 +64,7 @@ app.use('/', router);
 
 //connection.end();
 app.listen(3333);
-console.log('API funcionando!');
+console.log('API OK!');
 
 // Conecta ao banco de dados
 function execSQLQuery(sqlQry, connection, res) {

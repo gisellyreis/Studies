@@ -3,7 +3,7 @@ const contatos = document.getElementById('contatos');
 const container = document.getElementById('container');
 let data = {};
 
-list();
+list(); 
 
 function list() {
     fetch(
@@ -43,13 +43,16 @@ function list() {
                     text = document.createTextNode('Excluir')
                     btnEx.appendChild(text)
                     btnEx.setAttribute('onclick', `handleDelete(${contato.id})`)
-                    tdEx.appendChild(btnEx)
-                    tr.appendChild(tdEx)
+                    btnEx.setAttribute('class', 'btn btn-danger')
+                    tdEd.appendChild(btnEx)
 
                     text = document.createTextNode('Editar')
+                    btnEd.setAttribute('class', 'btn btn-info')
                     btnEd.appendChild(text)
                     tdEd.appendChild(btnEd)
                     btnEd.setAttribute('onclick', `edit(${contato.id})`)
+                    tdEd.appendChild(btnEd)
+
                     tr.appendChild(tdEd)
 
                     tr.setAttribute('id', contato.id)
@@ -94,24 +97,41 @@ function edit(id) {
             contato.innerHTML = '';
 
             form = document.createElement('form');
+
+            div = document.createElement('div');
+            div.setAttribute('class', 'form-group');
             inputNome = document.createElement('input');
             inputNome.setAttribute('value', nome);
+            inputNome.setAttribute('type', 'text');
+            inputNome.setAttribute('class', 'form-control');
             inputNome.setAttribute('id', 'nome');
-            form.appendChild(inputNome);
+            div.appendChild(inputNome);
+            form.appendChild(div);
 
+            div = document.createElement('div');
+            div.setAttribute('class', 'form-group');
             inputTel = document.createElement('input');
             inputTel.setAttribute('value', telefone);
+            inputTel.setAttribute('type', 'text');
+            inputTel.setAttribute('class', 'form-control');
             inputTel.setAttribute('id', 'telefone');
-            form.appendChild(inputTel);
+            div.appendChild(inputTel);
+            form.appendChild(div);
 
+            div = document.createElement('div');
+            div.setAttribute('class', 'form-group');
             inputEmail = document.createElement('input');
             inputEmail.setAttribute('value', email);
-            inputEmail.setAttribute('id', 'email');
-            form.appendChild(inputEmail);
+            inputEmail.setAttribute('type', 'email');
+            inputEmail.setAttribute('class', 'form-control');
+            inputEmail.setAttribute('id', 'email');            
+            div.appendChild(inputEmail);
+            form.appendChild(div);
 
             submit = document.createElement('input');
             submit.setAttribute('type', 'submit');
             submit.setAttribute('value', 'Enviar');
+            submit.setAttribute('class', 'btn btn-primary');
             form.appendChild(submit);
             form.setAttribute('id', 'edit-form');
             form.setAttribute('onsubmit', `handleEdit(${id})`);
@@ -141,7 +161,7 @@ function handleDelete(id) {
     .then(data => {
         console.log(data); 
     });
-    
+
 }
 
 async function postData(url = '', data = {}) {
@@ -178,6 +198,10 @@ function danger(msg) {
     div.appendChild(btn);
 
     container.appendChild(div);
+
+    btn.addEventListener('click', function() {
+        location.replace("./home.html");
+    })
 }
 
 function info(msg) {

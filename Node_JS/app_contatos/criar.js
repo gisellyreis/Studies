@@ -20,8 +20,7 @@ function create() {
         warning(data.message);
       }
       else {
-          console.log('não tem erro');
-            success('Contato criado com sucesso!');
+        success('Contato criado com sucesso!');
       }
     });
    

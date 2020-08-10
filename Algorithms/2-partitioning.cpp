@@ -35,3 +35,4 @@ int main() {
    if(partition(n, v)) cout<< '1'<<endl;
    else cout<< '0'<<endl;
 }
+

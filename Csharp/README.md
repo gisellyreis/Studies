@@ -1,2 +1,0 @@
---> dotnet new console -n Arquivo 
-    - cria pasta com nome Arquivo

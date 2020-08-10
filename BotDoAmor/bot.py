@@ -83,3 +83,4 @@ class WhatsappBot:
 
 bot = WhatsappBot()
 bot.EnviarMensagem()
+

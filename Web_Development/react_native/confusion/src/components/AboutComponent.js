@@ -5,6 +5,7 @@ import { FlatList } from 'react-native';
 import { ListItem } from 'react-native-elements';
 
 import { LEADERS } from '../shared/leaders';
+import { ScrollView } from 'react-native-gesture-handler';
 
 function History() {
     return (
@@ -45,19 +46,20 @@ class About extends Component {
 
         return (
             <>
+               <ScrollView>
                 <History />
-                
                 <Card featuredTitle="Corporate Leadership" >
-                    <Text style={{fontWeight: "bold", display: "flex", alignContent: "center", alignSelf: "center", }}>
-                        Corporate Leadership
-                    </Text>
+                        <Text style={{fontWeight: "bold", display: "flex", alignContent: "center", alignSelf: "center", }}>
+                            Corporate Leadership
+                        </Text>
 
-                    <FlatList style={{margin: 12}}
-                        data={this.state.leaders}
-                        renderItem={renderLeaders}
-                        keyExtractor={item => item.id.toString()}
-                    />
+                        <FlatList style={{margin: 12}}
+                            data={this.state.leaders}
+                            renderItem={renderLeaders}
+                            keyExtractor={item => item.id.toString()}
+                        />
                 </Card>
+               </ScrollView>
             </>
         );
     }

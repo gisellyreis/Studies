@@ -5,6 +5,7 @@ import { FlatList } from "react-native";
 import { ListItem } from "react-native-elements";
 import { connect } from "react-redux";
 import { baseUrl } from "../shared/baseUrl";
+import { Loading } from './LoadingComponent';
 
 const mapStateToProps = (state) => {
   return {
@@ -56,32 +57,44 @@ class About extends Component {
       );
     };
 
-    return (
-      <>
+    if (this.props.leaders.isLoading) {
+      return(
           <ScrollView>
-          <History />
-          <Card featuredTitle="Corporate Leadership">
-            <Text
-              style={{
-                fontWeight: "bold",
-                display: "flex",
-                alignContent: "center",
-                alignSelf: "center",
-              }}
-            >
-              Corporate Leadership
-            </Text>
-
-            <FlatList
-              data={this.props.leaders.leaders}
-              renderItem={renderLeaders}
-              keyExtractor={(item) => item.id.toString()}
-            />
-          </Card>
+              <History />
+              <Card
+                  title='Corporate Leadership'>
+                  <Loading />
+              </Card>
           </ScrollView>
-      </>
-    );
+      );
   }
+  else if (this.props.leaders.errMess) {
+      return(
+          <ScrollView>
+              <History />
+              <Card
+                  title='Corporate Leadership'>
+                  <Text>{this.props.leaders.errMess}</Text>
+              </Card>
+          </ScrollView>
+      );
+  }
+  else {
+      return(
+          <ScrollView>
+              <History />
+              <Card
+                  title='Corporate Leadership'>
+              <FlatList 
+                  data={this.props.leaders.leaders}
+                  renderItem={renderLeader}
+                  keyExtractor={item => item.id.toString()}
+                  />
+              </Card>
+          </ScrollView>
+      );
+  }
+}
 }
 
 export default connect(mapStateToProps)(About);

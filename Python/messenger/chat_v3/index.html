@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        section#home {
+            display: grid;
+            height: 100vh;
+            align-items: center;
+            text-align: center;
+        }
+        section#batepapo {
+            display: none;
+            grid-template-rows: 1fr min-content;
+            height: 100vh;
+        }
+        section#batepapo form {
+            display: grid;
+            grid-template-columns: 1fr min-content;
+            padding: 10px;
+            background: #ccc;
+        }
+        section#batepapo form input {
+            padding: 5px;
+        }
+        section#batepapo form button {
+            margin-left: 5px;
+            padding: 5px 15px;
+        }
+        div#mensagens {
+            overflow: auto;
+            word-wrap: break-word;
+        }
+        div#mensagens p {
+            margin: 5px;
+            padding: 10px;
+            background: #ccc;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <section id="home">
+        <form>
+            <label>Seu nome: <input id="nome" placeholder="Digite seu nome" required /></label>
+            <button>Entrar</button>
+        </form>
+    </section>
+    <section id="batepapo">
+        <div id="mensagens">
+            
+        </div>
+        <form>
+            <input id="mensagem" placeholder="Digite sua mensagem" required ><button>Enviar</button>
+        </form>
+    </section>
+</body>
+<script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
+<script>
+    var inome = document.querySelector('#nome');
+    var imensagem = document.querySelector('#mensagem');
+    var homeform = document.querySelector('#home form');
+    var chatform = document.querySelector('#batepapo form');
+    var msgdiv = document.querySelector('#mensagens');
+
+    function mensagemhtml(nome, msg) {
+        return '<p><strong>' +nome+ ': </strong>' +msg+ '</p>';
+    }
+    var socket = io.connect('//' + document.domain + ':' + location.port);
+    socket.on('message', function(data) {
+        msgdiv.innerHTML += mensagemhtml(data.nome, data.mensagem);
+    });
+
+    homeform.addEventListener('submit', function(e) {
+        document.querySelector('#home').style.display = 'none';
+        document.querySelector('#batepapo').style.display = 'grid';
+        e.preventDefault();
+    })
+    chatform.addEventListener('submit', function(e) {
+        socket.emit('message', {
+            nome: inome.value,
+            mensagem: imensagem.value
+        });
+        e.preventDefault();
+    })
+</script>
+</html>
